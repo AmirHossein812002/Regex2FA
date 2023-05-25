@@ -12,8 +12,11 @@ import { computed, ref } from "vue";
 import { FiniteAutomata } from "@/utilities/finiteAutomata.js";
 const regularExpression = ref("");
 const nfa = computed(() => {
-  if (regularExpression.value) {
-    return new FiniteAutomata().parseRegularExpression(regularExpression.value);
+  const nfa = new FiniteAutomata();
+  if (nfa.validateRegularExpression(regularExpression.value)) {
+    return nfa.parseRegularExpression(regularExpression.value);
+  } else {
+    return "invalid regular expression";
   }
 });
 </script>

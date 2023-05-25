@@ -280,4 +280,69 @@ export const FiniteAutomata = class {
       }
     }
   }
+
+  #validateParan(regularExpression) {
+    const stack = [];
+    let openParanNumber = 0,
+      closeParanNumber = 0;
+    for (let index = 0; index < regularExpression.length - 1; index++) {
+      const word = regularExpression[index];
+      const nextWord = regularExpression[index + 1];
+      if (word === "(") {
+        stack.push(word);
+        openParanNumber++;
+        if (nextWord === ")") {
+          return false;
+        }
+      } else if (word === ")") {
+        stack.pop();
+        closeParanNumber++;
+      }
+    }
+    if (regularExpression[regularExpression.length - 1] === ")") {
+      stack.pop();
+      closeParanNumber++;
+    } else if (regularExpression[regularExpression.length - 1] === "(") {
+      stack.push(regularExpression[regularExpression.length - 1]);
+      openParanNumber++;
+    }
+
+    return !stack.length && openParanNumber === closeParanNumber;
+  }
+
+  #validateSymbols(regularExpression) {
+    if (
+      regularExpression.includes("*+") ||
+      regularExpression.includes("**") ||
+      regularExpression.includes("+*") ||
+      regularExpression.includes("++")
+    ) {
+      return false;
+    }
+    for (let index = 0; index < regularExpression.length - 1; index++) {
+      if (
+        regularExpression[index] === "+" &&
+        !/^[a-zA-Z]+$/.test(regularExpression[index + 1])
+      ) {
+        return false;
+      }
+    }
+
+    if (regularExpression[regularExpression.length - 1] === "+") {
+      return false;
+    }
+    return true;
+  }
+
+  validateRegularExpression(regularExpression) {
+    if (!regularExpression) {
+      return false;
+    }
+
+    let isValid = true;
+    isValid &= this.#validateParan(regularExpression);
+    isValid &= this.#validateSymbols(regularExpression);
+
+    return isValid;
+  }
 };
