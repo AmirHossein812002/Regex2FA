@@ -1,7 +1,8 @@
 <template>
   <input type="text" v-model="regularExpression" />
-  <div v-if="nfa">
-    <automata-graph :automata="nfa"></automata-graph>
+
+  <div class="graph">
+    <automata-graph :automata="nfa" v-if="nfa"></automata-graph>
   </div>
 </template>
 
@@ -20,4 +21,10 @@ const nfa = computed(() => {
   }
 });
 </script>
-<style></style>
+<style scoped lang="scss">
+.graph {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+</style>
