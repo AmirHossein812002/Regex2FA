@@ -1,10 +1,7 @@
 ---
-title: bug
+name: bug
+about: bug caused by ...
 labels: bug
 assignees: AmirHossein812002
 ---
-
-**bug description:**
-<!--write the bug description here-->
-**caused by:**
-<!--write the cause of the bug here-->
+- [ ]  fixed
