@@ -1,10 +1,7 @@
 ---
-name: Bug
-about: reporting and fixing the bug
 title: bug
 labels: bug
 assignees: AmirHossein812002
-
 ---
 
 **bug description:**
