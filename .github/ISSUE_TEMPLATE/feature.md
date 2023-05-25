@@ -1,5 +1,6 @@
 ---
-title: feature
+name: feature
+about: about feature
 labels: enhancement
 assignees: AmirHossein812002
 ---
