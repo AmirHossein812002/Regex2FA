@@ -58,12 +58,17 @@ video {
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 62.5%;
   font: inherit;
   vertical-align: baseline;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   text-size-adjust: none;
+}
+
+html {
+  font-size: 62.5%;
+  background-color: #18191a;
+  font-family: "Gloria Hallelujah";
 }
 
 footer,
@@ -104,4 +109,7 @@ table {
 input {
   -webkit-appearance: none;
   border-radius: 0;
+  outline: none;
+  border: none;
+  font-family: inherit;
 }

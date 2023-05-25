@@ -1,9 +1,34 @@
 <template>
-  <input type="text" v-model="regularExpression" />
+  <main class="main">
+    <header>
+      <h1 class="main__header">Regular expression to finite automata</h1>
+    </header>
 
-  <div class="graph">
-    <automata-graph :automata="nfa" v-if="nfa"></automata-graph>
-  </div>
+    <div class="container">
+      <section class="main__section section">
+        <input type="text" v-model="regularExpression" class="section__input" />
+
+        <div class="section__graph">
+          <automata-graph :automata="nfa" v-if="nfa"></automata-graph>
+        </div>
+      </section>
+
+      <section class="main__section section">
+        <input
+          type="text"
+          v-model="regularExpressionCompare"
+          class="section__input"
+        />
+
+        <div class="section__graph">
+          <automata-graph
+            :automata="nfaCompare"
+            v-if="nfaCompare"
+          ></automata-graph>
+        </div>
+      </section>
+    </div>
+  </main>
 </template>
 
 <script setup>
@@ -12,6 +37,8 @@ import { FiniteAutomata } from "@/utilities/finiteAutomata.js";
 import AutomataGraph from "@/components/AutomataGraph.vue";
 
 const regularExpression = ref("");
+const regularExpressionCompare = ref("");
+
 const nfa = computed(() => {
   const nfa = new FiniteAutomata();
   if (nfa.validateRegularExpression(regularExpression.value)) {
@@ -20,11 +47,56 @@ const nfa = computed(() => {
     return null;
   }
 });
+const nfaCompare = computed(() => {
+  const nfaCompare = new FiniteAutomata();
+  if (nfaCompare.validateRegularExpression(regularExpressionCompare.value)) {
+    return nfaCompare.parseRegularExpression(regularExpressionCompare.value);
+  } else {
+    return null;
+  }
+});
 </script>
 <style scoped lang="scss">
-.graph {
+.main {
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
+  padding: 6.4rem 4.8rem 0 4.8rem;
+  &__header {
+    font-size: 4.8rem;
+    line-height: 6.4rem;
+    color: #d1ebd3;
+    text-align: center;
+    margin-bottom: 4.8rem;
+  }
+}
+
+.container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.section {
+  height: 50rem;
+  &:first-child {
+    text-align: right;
+    .section__input {
+      margin-right: 2.4rem;
+    }
+  }
+  &:last-child {
+    .section__input {
+      margin-left: 2.4rem;
+    }
+  }
+
+  &__input {
+    width: 50%;
+  }
+
+  &__graph {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
 }
 </style>
