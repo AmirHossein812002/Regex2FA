@@ -6,7 +6,23 @@
 
     <div class="container">
       <section class="main__section section">
-        <input type="text" v-model="regularExpression" class="section__input" />
+        <base-input
+          type="text"
+          v-model="regularExpression"
+          class="section__input"
+          labelText="Regular Expression"
+        >
+          <template #icon>
+            <lord-icon
+              src="https://cdn.lordicon.com/dtgezzsi.json"
+              trigger="hover"
+              colors="primary:#3d7141,secondary:#3d7141"
+              class="icon"
+              stroke="100"
+            >
+            </lord-icon>
+          </template>
+        </base-input>
 
         <div class="section__graph">
           <automata-graph :automata="nfa" v-if="nfa"></automata-graph>
@@ -14,11 +30,23 @@
       </section>
 
       <section class="main__section section">
-        <input
+        <base-input
           type="text"
           v-model="regularExpressionCompare"
           class="section__input"
-        />
+          labelText="Regular Expression"
+        >
+          <template #icon>
+            <lord-icon
+              src="https://cdn.lordicon.com/dtgezzsi.json"
+              trigger="hover"
+              colors="primary:#3d7141,secondary:#3d7141"
+              class="icon"
+              stroke="100"
+            >
+            </lord-icon>
+          </template>
+        </base-input>
 
         <div class="section__graph">
           <automata-graph
@@ -32,9 +60,10 @@
 </template>
 
 <script setup>
+import "https://cdn.lordicon.com/bhenfmcm.js";
 import { computed, ref } from "vue";
 import { FiniteAutomata } from "@/utilities/finiteAutomata.js";
-import AutomataGraph from "@/components/AutomataGraph.vue";
+import AutomataGraph from "@/components/AutomataGraph/AutomataGraph.vue";
 
 const regularExpression = ref("");
 const regularExpressionCompare = ref("");
@@ -76,11 +105,11 @@ const nfaCompare = computed(() => {
   grid-template-columns: repeat(2, 1fr);
 }
 .section {
-  height: 50rem;
+  height: 48rem;
   &:first-child {
-    text-align: right;
     .section__input {
       margin-right: 2.4rem;
+      margin-left: auto;
     }
   }
   &:last-child {
@@ -90,7 +119,7 @@ const nfaCompare = computed(() => {
   }
 
   &__input {
-    width: 50%;
+    width: 65%;
   }
 
   &__graph {
@@ -98,5 +127,10 @@ const nfaCompare = computed(() => {
     height: 100%;
     overflow: hidden;
   }
+}
+
+.icon {
+  width: 4.8rem;
+  height: 4.8rem;
 }
 </style>
