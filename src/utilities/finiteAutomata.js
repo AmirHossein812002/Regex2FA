@@ -322,7 +322,7 @@ export const FiniteAutomata = class {
     for (let index = 0; index < regularExpression.length - 1; index++) {
       if (
         regularExpression[index] === "+" &&
-        !/^[a-zA-Z(]+$/.test(regularExpression[index + 1])
+        !/^[a-zA-Z(0-9]+$/.test(regularExpression[index + 1])
       ) {
         return false;
       }
