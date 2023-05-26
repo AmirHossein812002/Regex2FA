@@ -345,4 +345,8 @@ export const FiniteAutomata = class {
 
     return isValid;
   }
+
+  compare(regularExpression, compareRegularExpression) {
+    return regularExpression === compareRegularExpression;
+  }
 };
