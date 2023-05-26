@@ -29,6 +29,8 @@
         </div>
       </section>
 
+      <p class="equal">{{ isEqual }}</p>
+
       <section class="main__section section">
         <base-input
           type="text"
@@ -84,6 +86,19 @@ const nfaCompare = computed(() => {
     return null;
   }
 });
+
+const isEqual = computed(() => {
+  let isEqual = false;
+  if (regularExpression.value && regularExpressionCompare.value) {
+    const nfa = new FiniteAutomata();
+    isEqual = FiniteAutomata.compare(
+      regularExpression.value,
+      regularExpressionCompare.value
+    );
+  }
+  const symbol = isEqual ? "==" : "!=";
+  return symbol;
+});
 </script>
 <style scoped lang="scss">
 .main {
@@ -102,19 +117,19 @@ const nfaCompare = computed(() => {
 .container {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr min-content 1fr;
 }
 .section {
   height: 48rem;
   &:first-child {
     .section__input {
-      margin-right: 2.4rem;
+      margin-right: 1.6rem;
       margin-left: auto;
     }
   }
   &:last-child {
     .section__input {
-      margin-left: 2.4rem;
+      margin-left: 1.6rem;
     }
   }
 
@@ -128,7 +143,10 @@ const nfaCompare = computed(() => {
     overflow: hidden;
   }
 }
-
+.equal {
+  font-size: 4.8rem;
+  color: #d1ebd3;
+}
 .icon {
   width: 4.8rem;
   height: 4.8rem;
