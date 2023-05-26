@@ -91,7 +91,7 @@ const isEqual = computed(() => {
   let isEqual = false;
   if (regularExpression.value && regularExpressionCompare.value) {
     const nfa = new FiniteAutomata();
-    isEqual = FiniteAutomata.compare(
+    isEqual = nfa.compare(
       regularExpression.value,
       regularExpressionCompare.value
     );
