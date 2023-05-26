@@ -312,7 +312,6 @@ export const FiniteAutomata = class {
 
   #validateSymbols(regularExpression) {
     if (
-      regularExpression.includes("*+") ||
       regularExpression.includes("**") ||
       regularExpression.includes("+*") ||
       regularExpression.includes("++")
