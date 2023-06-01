@@ -348,4 +348,56 @@ export const FiniteAutomata = class {
   compare(regularExpression, compareRegularExpression) {
     return regularExpression === compareRegularExpression;
   }
+
+  toDFA() {
+    if (this.type === "dfa") {
+      return this;
+    }
+    const dfa = new this.constructor();
+    const dfaStates = [];
+
+    const state = this.#getChainLambda(0);
+    console.log(this.#getChainTransition(state, "a"));
+
+    dfa.checkType();
+    return dfa;
+  }
+
+  #getChainLambda(index) {
+    const chaindedStates = [];
+
+    for (const transition of this.states[index]) {
+      if (transition.value === "λ" && !chaindedStates.includes(transition.to)) {
+        chaindedStates.push(transition.to);
+      }
+    }
+    for (const stateOfChanedState of chaindedStates) {
+      const states = this.#getChainLambda(stateOfChanedState);
+      for (const state of states) {
+        if (!chaindedStates.includes(state)) {
+          chaindedStates.push(state);
+        }
+      }
+    }
+    chaindedStates.push(index);
+    return chaindedStates.sort((a, b) => a - b);
+  }
+
+  #getChainTransition(states, value) {
+    const chaindedStates = [];
+    for (const state of states) {
+      for (const transition of this.states[state]) {
+        if (transition.value === value) {
+          const chaindedStatesOfValue = this.#getChainLambda(transition.to);
+          for (const chainedState of chaindedStatesOfValue) {
+            if (!chaindedStates.includes(chainedState)) {
+              chaindedStates.push(chainedState);
+            }
+          }
+        }
+      }
+    }
+
+    return chaindedStates;
+  }
 };
