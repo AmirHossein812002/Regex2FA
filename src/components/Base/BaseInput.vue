@@ -12,6 +12,10 @@
       @input="input($event)"
     />
     <label class="input-box__label">{{ labelText }}</label>
+
+    <div class="input-box__select">
+      <slot name="select"></slot>
+    </div>
   </div>
 </template>
 
@@ -83,12 +87,18 @@ const input_class = computed(() => {
   &__icon {
     position: absolute;
   }
+  &__select {
+    position: absolute;
+    top: 50%;
+    right: 2rem;
+    transform: translateY(-50%);
+  }
 }
 
 .input {
   background-color: #e0f2e2;
   border-radius: 2rem;
-  padding: 0.4em 2rem 0.4rem 4.8rem;
+  padding: 0.4em 12rem 0.4rem 4.8rem;
   color: #0a130b;
   font-size: 1.6rem;
   width: 100%;
@@ -99,7 +109,7 @@ const input_class = computed(() => {
   &:active,
   &--active {
     border: 0.2rem solid #47844c;
-    padding: 0.8rem 2rem 0 4.8rem;
+    padding: 0.8rem 12rem 0 4.8rem;
     & + .input-box__label {
       top: 1rem;
       font-weight: 900;

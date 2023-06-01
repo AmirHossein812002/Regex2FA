@@ -5,96 +5,33 @@
     </header>
 
     <div class="container">
-      <section class="main__section section">
-        <base-input
-          type="text"
-          v-model="regularExpression"
-          class="section__input"
-          labelText="Regular Expression"
-        >
-          <template #icon>
-            <lord-icon
-              src="https://cdn.lordicon.com/dtgezzsi.json"
-              trigger="hover"
-              colors="primary:#3d7141,secondary:#3d7141"
-              class="icon"
-              stroke="100"
-            >
-            </lord-icon>
-          </template>
-        </base-input>
-
-        <div class="section__graph">
-          <automata-graph :automata="nfa" v-if="nfa"></automata-graph>
-        </div>
-      </section>
-
+      <automata-box @input="changeRegularExp"></automata-box>
       <p class="equal">{{ isEqual }}</p>
-
-      <section class="main__section section">
-        <base-input
-          type="text"
-          v-model="regularExpressionCompare"
-          class="section__input"
-          labelText="Regular Expression"
-        >
-          <template #icon>
-            <lord-icon
-              src="https://cdn.lordicon.com/dtgezzsi.json"
-              trigger="hover"
-              colors="primary:#3d7141,secondary:#3d7141"
-              class="icon"
-              stroke="100"
-            >
-            </lord-icon>
-          </template>
-        </base-input>
-
-        <div class="section__graph">
-          <automata-graph
-            :automata="nfaCompare"
-            v-if="nfaCompare"
-          ></automata-graph>
-        </div>
-      </section>
+      <automata-box @input="changeRegularExpCompare"></automata-box>
     </div>
   </main>
 </template>
 
 <script setup>
-import "https://cdn.lordicon.com/bhenfmcm.js";
-import { computed, ref } from "vue";
+import AutomataBox from "@/components/Automata/AutomataBox.vue";
+import { ref, computed } from "vue";
 import { FiniteAutomata } from "@/utilities/finiteAutomata.js";
-import AutomataGraph from "@/components/AutomataGraph/AutomataGraph.vue";
 
-const regularExpression = ref("");
-const regularExpressionCompare = ref("");
+const regularExp = ref("");
+const regularExpCompare = ref("");
 
-const nfa = computed(() => {
-  const nfa = new FiniteAutomata();
-  if (nfa.validateRegularExpression(regularExpression.value)) {
-    return nfa.parseRegularExpression(regularExpression.value).toDFA();
-  } else {
-    return null;
-  }
-});
-const nfaCompare = computed(() => {
-  const nfaCompare = new FiniteAutomata();
-  if (nfaCompare.validateRegularExpression(regularExpressionCompare.value)) {
-    return nfaCompare.parseRegularExpression(regularExpressionCompare.value);
-  } else {
-    return null;
-  }
-});
+const changeRegularExp = (value) => {
+  regularExp.value = value;
+};
+const changeRegularExpCompare = (value) => {
+  regularExpCompare.value = value;
+};
 
 const isEqual = computed(() => {
   let isEqual = false;
-  if (regularExpression.value && regularExpressionCompare.value) {
+  if (regularExp.value && regularExpCompare.value) {
     const nfa = new FiniteAutomata();
-    isEqual = nfa.compare(
-      regularExpression.value,
-      regularExpressionCompare.value
-    );
+    isEqual = nfa.compare(regularExp.value, regularExpCompare.value);
   }
   const symbol = isEqual ? "==" : "!=";
   return symbol;
@@ -119,36 +56,9 @@ const isEqual = computed(() => {
   display: grid;
   grid-template-columns: 1fr min-content 1fr;
 }
-.section {
-  height: 48rem;
-  &:first-child {
-    .section__input {
-      margin-right: 1.6rem;
-      margin-left: auto;
-    }
-  }
-  &:last-child {
-    .section__input {
-      margin-left: 1.6rem;
-    }
-  }
 
-  &__input {
-    width: 65%;
-  }
-
-  &__graph {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-}
 .equal {
   font-size: 4.8rem;
   color: #d1ebd3;
-}
-.icon {
-  width: 4.8rem;
-  height: 4.8rem;
 }
 </style>

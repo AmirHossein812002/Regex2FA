@@ -10,6 +10,10 @@ app.component(
   "BaseInput",
   defineAsyncComponent(() => import("@/components/Base/BaseInput.vue"))
 );
+app.component(
+  "BaseSelect",
+  defineAsyncComponent(() => import("@/components/Base/BaseSelect.vue"))
+);
 app.use(createPinia());
 app.use(router);
 
