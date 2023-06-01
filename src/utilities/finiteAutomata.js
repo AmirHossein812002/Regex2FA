@@ -424,8 +424,9 @@ export const FiniteAutomata = class {
     return dfa;
   }
 
-  #getChainLambda(index) {
+  #getChainLambda(index, checked = []) {
     const chaindedStates = [];
+    checked.push(index);
 
     for (const transition of this.states[index]) {
       if (transition.value === "λ" && !chaindedStates.includes(transition.to)) {
@@ -433,10 +434,12 @@ export const FiniteAutomata = class {
       }
     }
     for (const stateOfChanedState of chaindedStates) {
-      const states = this.#getChainLambda(stateOfChanedState);
-      for (const state of states) {
-        if (!chaindedStates.includes(state)) {
-          chaindedStates.push(state);
+      if (!checked.includes(stateOfChanedState)) {
+        const states = this.#getChainLambda(stateOfChanedState, checked);
+        for (const state of states) {
+          if (!chaindedStates.includes(state)) {
+            chaindedStates.push(state);
+          }
         }
       }
     }
