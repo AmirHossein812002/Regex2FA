@@ -356,8 +356,7 @@ export const FiniteAutomata = class {
     const dfa = new this.constructor();
     const dfaStates = [];
 
-    const state = this.#getChainLambda(0);
-    console.log(this.#getChainTransition(state, "a"));
+    const firstState = this.#getChainLambda(0);
 
     dfa.checkType();
     return dfa;
