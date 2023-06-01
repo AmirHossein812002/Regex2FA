@@ -1,3 +1,5 @@
+import { compareArray } from "./array";
+
 class Transition {
   constructor(value, to = null) {
     this.value = value;
@@ -7,7 +9,7 @@ class Transition {
 
 export const FiniteAutomata = class {
   constructor(finalStates, alphabets = []) {
-    this.finalStates = finalStates;
+    this.finalStates = finalStates || [];
     this.type = "nfa";
     this.alphabets = alphabets;
     this.states = [];
@@ -356,7 +358,67 @@ export const FiniteAutomata = class {
     const dfa = new this.constructor();
     const dfaStates = [];
 
-    const firstState = this.#getChainLambda(0);
+    dfaStates.push({ groupe: this.#getChainLambda(0), transitions: [] });
+
+    let index = 0;
+    let hasTrap = false;
+
+    while (index !== dfaStates.length) {
+      for (const alphabet of this.alphabets) {
+        if (alphabet === "λ") continue;
+
+        let added = false;
+
+        const to = this.#getChainTransition(dfaStates[index].groupe, alphabet);
+
+        if (to.length !== 0) {
+          for (let i = 0; i < dfaStates.length; i++) {
+            if (compareArray(dfaStates[i].groupe, to)) {
+              dfaStates[index].transitions.push({ value: alphabet, to: i });
+              added = true;
+              break;
+            }
+          }
+          if (added) {
+            continue;
+          } else {
+            dfaStates[index].transitions.push({
+              value: alphabet,
+              to: dfaStates.length,
+            });
+            dfaStates.push({ groupe: to, transitions: [] });
+          }
+        } else {
+          dfaStates[index].transitions.push({ value: alphabet, to: "trap" });
+          hasTrap = true;
+        }
+      }
+      index++;
+    }
+
+    dfa.addStates(dfaStates.length + hasTrap ? 1 : 0);
+
+    for (let index = 0; index < dfaStates.length; index++) {
+      for (const finalState of this.finalStates) {
+        if (dfaStates[index].groupe.includes(finalState)) {
+          dfa.finalStates.push(index);
+        }
+      }
+
+      for (const transition of dfaStates[index].transitions) {
+        if (transition.to === "trap") {
+          dfa.addTransition(transition.value, index, dfaStates.length);
+        } else {
+          dfa.addTransition(transition.value, index, transition.to);
+        }
+      }
+    }
+    if (hasTrap) {
+      for (const alphabet of this.alphabets) {
+        if (alphabet === "λ") continue;
+        dfa.addTransition(alphabet, dfaStates.length, dfaStates.length);
+      }
+    }
 
     dfa.checkType();
     return dfa;

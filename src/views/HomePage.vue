@@ -73,9 +73,7 @@ const regularExpressionCompare = ref("");
 const nfa = computed(() => {
   const nfa = new FiniteAutomata();
   if (nfa.validateRegularExpression(regularExpression.value)) {
-    const sth = nfa.parseRegularExpression(regularExpression.value);
-    sth.toDFA();
-    return sth;
+    return nfa.parseRegularExpression(regularExpression.value).toDFA();
   } else {
     return null;
   }
