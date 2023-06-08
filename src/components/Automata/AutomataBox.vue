@@ -42,14 +42,15 @@ const options = ["nfa", "dfa", "mini dfa"];
 const changeType = (option) => (type.value = option);
 
 const nfa = computed(() => {
-  const nfa = new FiniteAutomata();
+  let nfa = new FiniteAutomata();
   if (nfa.validateRegularExpression(regularExpression.value)) {
+    nfa = nfa.parseRegularExpression(regularExpression.value);
     if (type.value === "nfa") {
-      return nfa.parseRegularExpression(regularExpression.value);
+      return nfa;
     } else if (type.value === "dfa") {
-      return nfa.parseRegularExpression(regularExpression.value).toDFA();
-    } else {
-      return null;
+      return nfa.toDFA();
+    } else if (type.value === "mini dfa") {
+      return nfa.toMiniDFA();
     }
   } else {
     return null;

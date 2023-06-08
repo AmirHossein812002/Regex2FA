@@ -256,6 +256,7 @@ export const FiniteAutomata = class {
 
   removeExtraState(stateNumber) {
     this.states.splice(stateNumber, 1);
+
     this.states.forEach((state) => {
       state.forEach((transition) => {
         if (transition.to > stateNumber) {
@@ -275,11 +276,19 @@ export const FiniteAutomata = class {
       });
     });
     statesArray.sort((a, b) => a - b);
-    for (let index = 1; index < this.states.length; index++) {
+
+    let index = 1;
+    while (index < this.states.length) {
       if (!statesArray.includes(index)) {
         this.removeExtraState(index);
-        statesArray = statesArray.map((state) => state - 1);
+        statesArray = statesArray.map((state) => {
+          if (state >= index) return state - 1;
+          return state;
+        });
+        index = 1;
+        continue;
       }
+      index++;
     }
   }
 
@@ -463,5 +472,100 @@ export const FiniteAutomata = class {
     }
 
     return chaindedStates;
+  }
+
+  toMiniDFA() {
+    const dfa = this.toDFA();
+
+    let groups = [];
+    groups.push([...dfa.finalStates]);
+    const noneFinialStates = [];
+    for (let index = 0; index < dfa.states.length; index++) {
+      if (!dfa.finalStates.includes(index)) {
+        noneFinialStates.push(index);
+      }
+    }
+    if (noneFinialStates.length) groups.push(noneFinialStates);
+
+    let added;
+
+    do {
+      added = 0;
+      for (const alphabet of dfa.alphabets) {
+        const newGroups = [];
+        for (const group of groups) {
+          const newGroup = [...group];
+          for (const [index, state] of group.entries()) {
+            newGroup[index] = {
+              state,
+              to: this.#getGroupTo(
+                groups,
+                dfa.states[state].find(
+                  (transition) => transition.value === alphabet
+                )
+              ),
+            };
+          }
+          const seperatedGroup = this.#getSeperatedGroup(
+            newGroup,
+            groups.length
+          );
+          newGroups.splice(0, 0, ...seperatedGroup);
+        }
+
+        if (groups.length !== newGroups.length) {
+          added++;
+        }
+        groups = newGroups;
+      }
+    } while (added);
+
+    const finalStates = dfa.finalStates;
+    dfa.finalStates = [];
+
+    for (const group of groups) {
+      for (const state of group) {
+        if (finalStates.includes(state)) {
+          const min = group.sort((a, b) => a - b)[0];
+          dfa.finalStates.push(min);
+          break;
+        }
+      }
+    }
+
+    for (const group of groups) {
+      const min = group.sort((a, b) => a - b)[0];
+      for (let index = 0; index < dfa.states.length; index++) {
+        dfa.states[index].forEach((transition) => {
+          if (group.includes(transition.to)) {
+            transition.to = min;
+          }
+        });
+      }
+    }
+
+    dfa.removeExtraStates();
+
+    return dfa;
+  }
+
+  #getGroupTo(groups, transition) {
+    for (const [index, group] of groups.entries()) {
+      if (group.includes(transition.to)) {
+        return index;
+      }
+    }
+  }
+
+  #getSeperatedGroup(group, numberOfGroups) {
+    const groups = [];
+    for (let index = 0; index < numberOfGroups; index++) {
+      groups.push([]);
+    }
+    for (const state of group) {
+      groups[state.to].push(state.state);
+    }
+
+    return groups.filter((group) => group.length);
   }
 };
