@@ -356,8 +356,43 @@ export const FiniteAutomata = class {
     return isValid;
   }
 
-  compare(regularExpression, compareRegularExpression) {
-    return regularExpression === compareRegularExpression;
+  isEqual(regularExpression, compareRegularExpression) {
+    const miniDFA = this.parseRegularExpression(regularExpression).toMiniDFA();
+    const compareMiniDFA = this.parseRegularExpression(
+      compareRegularExpression
+    ).toMiniDFA();
+    if (
+      miniDFA.states.length !== compareMiniDFA.states.length ||
+      !compareArray(miniDFA.finalStates, compareMiniDFA.finalStates) ||
+      !compareArray(miniDFA.alphabets, compareMiniDFA.alphabets)
+    )
+      return false;
+
+    for (let index = 0; index < miniDFA.states.length; index++) {
+      if (
+        !this.#isEqualTransitions(
+          miniDFA.states[index],
+          compareMiniDFA.states[index],
+          miniDFA.alphabets
+        )
+      ) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+  #isEqualTransitions(transitions, compareTransitions, alphabets) {
+    for (const alphabet of alphabets) {
+      const transition = transitions.find(
+        (transition) => transition.value === alphabet
+      );
+      const compareTransition = compareTransitions.find(
+        (transition) => transition.value === alphabet
+      );
+      if (transition.to !== compareTransition.to) return false;
+    }
+    return true;
   }
 
   toDFA() {

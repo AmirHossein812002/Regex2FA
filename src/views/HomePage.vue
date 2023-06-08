@@ -29,9 +29,14 @@ const changeRegularExpCompare = (value) => {
 
 const isEqual = computed(() => {
   let isEqual = false;
-  if (regularExp.value && regularExpCompare.value) {
-    const nfa = new FiniteAutomata();
-    isEqual = nfa.compare(regularExp.value, regularExpCompare.value);
+  const nfa = new FiniteAutomata();
+  if (
+    regularExp.value &&
+    regularExpCompare.value &&
+    nfa.validateRegularExpression(regularExp.value) &&
+    nfa.validateRegularExpression(regularExpCompare.value)
+  ) {
+    isEqual = nfa.isEqual(regularExp.value, regularExpCompare.value);
   }
   const symbol = isEqual ? "==" : "!=";
   return symbol;
