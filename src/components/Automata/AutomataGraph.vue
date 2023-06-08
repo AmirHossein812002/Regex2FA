@@ -52,6 +52,21 @@ const data = computed(() => {
   const edges = [];
   for (let index = 0; index < props.automata.states.length; index++) {
     const transitions = props.automata.states[index];
+
+    for (let i = 0; i < transitions.length; i++) {
+      const similarTo = [];
+      for (let j = i + 1; j < transitions.length; j++) {
+        if (transitions[j].to === transitions[i].to) {
+          similarTo.push(transitions[j].value);
+          transitions.splice(j, 1);
+        }
+      }
+
+      for (const value of similarTo) {
+        transitions[i].value += ", " + value;
+      }
+    }
+
     const mappedTransitions = transitions.map((transition) => ({
       from: index,
       to: transition.to,

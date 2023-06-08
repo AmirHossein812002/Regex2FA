@@ -264,6 +264,10 @@ export const FiniteAutomata = class {
         }
       });
     });
+
+    for (let index = 0; index < this.finalStates.length; index++) {
+      if (this.finalStates[index] > stateNumber) this.finalStates[index]--;
+    }
   }
 
   removeExtraStates() {
