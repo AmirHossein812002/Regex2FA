@@ -5,9 +5,15 @@
     </header>
 
     <div class="container">
-      <automata-box @input="changeRegularExp"></automata-box>
+      <automata-box
+        @input="changeRegularExp"
+        class="automata-box"
+      ></automata-box>
       <p class="equal">{{ isEqual }}</p>
-      <automata-box @input="changeRegularExpCompare"></automata-box>
+      <automata-box
+        @input="changeRegularExpCompare"
+        class="automata-box"
+      ></automata-box>
     </div>
   </main>
 </template>
@@ -61,7 +67,10 @@ const isEqual = computed(() => {
   display: grid;
   grid-template-columns: 1fr min-content 1fr;
 }
-
+.automata-box {
+  min-height: 48rem;
+  height: 65vh;
+}
 .equal {
   font-size: 4.8rem;
   color: #d1ebd3;

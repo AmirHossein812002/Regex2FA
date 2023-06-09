@@ -62,7 +62,6 @@ watch(regularExpression, () => emits("input", regularExpression.value));
 
 <style lang="scss" scoped>
 .section {
-  height: 48rem;
   &:first-child {
     .section__input {
       margin-right: 1.6rem;
