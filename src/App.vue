@@ -3,5 +3,5 @@
 </template>
 
 <style lang="scss">
-@import url("@/assets/style/reset.scss");
+@use "@/assets/style/main.scss";
 </style>
