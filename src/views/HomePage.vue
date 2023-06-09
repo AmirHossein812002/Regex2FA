@@ -55,7 +55,7 @@ const isEqual = computed(() => {
   padding: 6.4rem 4.8rem 0 4.8rem;
   &__header {
     font-size: 4.8rem;
-    line-height: 6.4rem;
+    line-height: 8.4rem;
     color: #d1ebd3;
     text-align: center;
     margin-bottom: 4.8rem;
