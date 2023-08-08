@@ -1,5 +1,5 @@
 # Regex2FA - Regular Expression to Finite Automata Converter
-![wired-outline-742-multimedia-code-1 (2)](https://github.com/AmirHossein812002/Regex2FA/assets/98973037/5699329c-d6e6-4670-b542-1a9ae5762dea)
+![wired-outline-742-multimedia-code-1 (2)](https://github.com/AmirHossein812002/Regex2FA/assets/98973037/6893e34a-bf35-410b-8868-e5c0fc1de1b4)
 
 Welcome to Regex2FA, your one-stop tool for converting regular expressions into various forms of finite automata! Whether you're a computer science enthusiast, a student studying formal languages, or just someone curious about the magic behind regular expressions and automata, Regex2FA has got you covered.
 
