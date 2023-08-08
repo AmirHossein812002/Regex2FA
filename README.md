@@ -52,7 +52,7 @@ Are you tired of drawing countless automata diagrams by hand? Fret not! Regex2FA
 
 Let's dive into a couple of examples to showcase the magic of Regex2FA:
 
-### Example 1: Simple Language
+### Example: Simple Language
 
 **Input:**
 ```
@@ -61,20 +61,16 @@ Let's dive into a couple of examples to showcase the magic of Regex2FA:
 
 **Output:**
 - NFA Visualization
+  
+![image](https://github.com/AmirHossein812002/Regex2FA/assets/98973037/ab46ffae-12ca-49c6-a766-869578ffa212)
+
 - DFA Visualization
+
+![image](https://github.com/AmirHossein812002/Regex2FA/assets/98973037/7721082d-5623-4a48-a180-61ea5e014d5d)
+
 - Minimized DFA Visualization
 
-### Example 2: Complex Language
-
-**Input:**
-```
-(0+1)*0101(0+1)*
-```
-
-**Output:**
-- NFA Visualization
-- DFA Visualization
-- Minimized DFA Visualization
+![image](https://github.com/AmirHossein812002/Regex2FA/assets/98973037/9edfa3c7-c1ba-4e8d-b4a0-9d161505e3ec)
 
 ## Language Equivalence
 
