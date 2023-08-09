@@ -74,7 +74,7 @@ Let's dive into a couple of examples to showcase the magic of Regex2FA:
 
 ## Language Equivalence
 
-Curious if two regular expressions are equivalent in terms of the languages they describe? Regex2FA can assist you in verifying this! Simply enter the two regular expressions and let the tool determine if they are describing the same language. for example:
+Curious if two regular expressions are equivalent in terms of the languages they describe? Regex2FA can assist you in verifying this! Simply enter the two regular expressions and let the tool determine if they are describing the same language. For example:
 ```
 (a+b)* == (a*b*)*
 ```
