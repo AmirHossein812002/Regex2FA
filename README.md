@@ -78,7 +78,7 @@ Curious if two regular expressions are equivalent in terms of the languages they
 
 ## Contributing
 
-Regex2FA is an open-source project, and we welcome contributions from the community. Whether you're a developer, designer, or simply passionate about automata theory, your contributions are valuable! Check out our [Contribution Guidelines](CONTRIBUTING.md) to get started.
+Regex2FA is an open-source project, and we welcome contributions from the community. Whether you're a developer, designer, or simply passionate about automata theory, your contributions are valuable!
 
 ## License
 
